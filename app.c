@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
     {
         // Remove newline/carriage return
         buffer[strcspn(buffer, "\r\n")] = '\0';
-        
+
         // Only keep 5-letter words
         if (strlen(buffer) == 5)
         {
@@ -79,23 +79,24 @@ int main(int argc, char *argv[])
 
     int attempts = ROWS;
     int currentRow = 0;
- 
+
     /* ---------- Game loop ---------- */
     while (attempts--)
     {
         char guess[20];
 
         printf("\nAttempt %d → Enter 5-letter word: ", currentRow + 1);
-        
+
         if (scanf("%19s", guess) != 1)
         {
             printf("\nInvalid input!\n");
             break;
         }
-        
+
         // Clear input buffer
         int c;
-        while ((c = getchar()) != '\n' && c != EOF);
+        while ((c = getchar()) != '\n' && c != EOF)
+            ;
 
         // Convert to uppercase
         for (int i = 0; guess[i] != '\0'; i++)
@@ -162,7 +163,7 @@ int main(int argc, char *argv[])
         }
 
         currentRow++;
-        clearScreen(); 
+        clearScreen();
         printDaBoard();
 
         if (strcmp(guess, secret) == 0)
@@ -190,17 +191,19 @@ int isValid(char guess[])
 /* ---------- Clear screen ---------- */
 void clearScreen(void)
 {
-    #ifdef _WIN32
-        system("cls");
-    #else
-        system("clear");
-    #endif
+#ifdef _WIN32
+    system("cls");
+#else
+    system("clear");
+#endif
 }
 
 /* ---------- Board rendering ---------- */
 void printDaBoard(void)
 {
+
     printf("\n");
+
     for (int i = 0; i < ROWS; i++)
     {
         // Top padding line
@@ -219,7 +222,7 @@ void printDaBoard(void)
                 printf(" " GRAY "       " RESET " ");
         }
         printf("\n");
-        
+
         // Main content line with letter
         for (int j = 0; j < COLS; j++)
         {
@@ -229,7 +232,7 @@ void printDaBoard(void)
                 printf(" " GRAY "       " RESET " ");
         }
         printf("\n");
-        
+
         // Bottom padding line
         for (int j = 0; j < COLS; j++)
         {
@@ -246,7 +249,7 @@ void printDaBoard(void)
                 printf(" " GRAY "       " RESET " ");
         }
         printf("\n");
-        
+
         // Empty spacing line
         printf("\n");
     }
