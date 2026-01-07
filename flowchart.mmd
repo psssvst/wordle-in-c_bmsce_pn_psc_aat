@@ -1,0 +1,44 @@
+flowchart TD
+    Start([Start]) --> Declare["Declare constants, variables and arrays\n(dictionary words, game board, attempts, secret)"]
+    Declare --> Init["Initialize game board\n(set all board positions to empty)"]
+    Init --> OpenFile["Open words.txt file"]
+    OpenFile --> ReadWords["Read all valid 5-letter words\n(convert to uppercase and store in array)"]
+    ReadWords --> WordsLoaded{"Words loaded successfully?"}
+    
+    WordsLoaded -- No --> DispErr1["Display error"]
+    DispErr1 --> End1([End])
+    
+    WordsLoaded -- Yes --> GenRand["Generate random number"]
+    GenRand --> SelWord["Select one word as secret word"]
+    SelWord --> SetAtt["Set maximum attempts = 6"]
+    
+    SetAtt --> CheckAtt{"Attempts > 0 ?"}
+    CheckAtt -- No --> DispSecret["Display Secret Word"]
+    DispSecret --> End2([End])
+    
+    CheckAtt -- Yes --> ReadUser["Read 5-letter word from user"]
+    ReadUser --> ConvertUp["Convert entered word to uppercase"]
+    ConvertUp --> CheckLen{"Word length = 5 ?"}
+    
+    CheckLen -- No --> DispErr2["Display error"]
+    DispErr2 --> ReadAgain1["Read input again"]
+    ReadAgain1 --> CheckAtt
+    
+    CheckLen -- Yes --> CheckDict{"Word exists in dictionary ?"}
+    
+    CheckDict -- No --> DispErr3["Display error"]
+    DispErr3 --> ReadAgain2["Read input again"]
+    ReadAgain2 --> CheckAtt
+    
+    CheckDict -- Yes --> CountFreq["Count frequency of characters in secret word"]
+    CountFreq --> Compare["Compare guess with secret word\nCorrect Letter and Position - Green\nCorrect Letter, wrong Position - Yellow\nLetter not present - Gray"]
+    Compare --> StoreRes["Store result in game board"]
+    StoreRes --> DispUpd["Display updated game board"]
+    DispUpd --> Match{"Does guess match secret word?"}
+    
+    Match -- No --> DecAtt["Decrease attempts by 1"]
+    DecAtt --> Repeat["Repeat loop"]
+    Repeat --> CheckAtt
+    
+    Match -- Yes --> Win["Display you win!"]
+    Win --> End3([End])
