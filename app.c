@@ -29,7 +29,7 @@ void clearScreen(void);
 
 int main(int argc, char *argv[])
 {
-    /* ---------- Initialize board ---------- */
+    /* Initialize board */
     for (int i = 0; i < ROWS; i++)
     {
         for (int j = 0; j < COLS; j++)
@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    /* ---------- Load dictionary ---------- */
+    /* Load dictionary */
     FILE *file = fopen("words.txt", "r");
     if (!file)
     {
@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    /* ---------- Pick secret ---------- */
+    /* Pick secret */
     srand(time(NULL));
     char secret[WORD_LEN];
     strcpy(secret, wordList[rand() % totalWords]);
@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
     int attempts = ROWS;
     int currentRow = 0;
 
-    /* ---------- Game loop ---------- */
+    /* Game loop */
     while (attempts--)
     {
         char guess[20];
@@ -249,7 +249,6 @@ void printDaBoard(void)
                 printf(" " GRAY "       " RESET " ");
         }
         printf("\n");
-
         // Empty spacing line
         printf("\n");
     }
